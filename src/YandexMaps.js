@@ -145,6 +145,8 @@ class YandexMaps extends Component {
                                         
                                     //    fetch("https://yamaz.ru/api/Values/items",{method: 'GET', mode:'cors' })
                                     //   .then(response => console.log response)
+                                    
+                                    //https://flaviocopes.com/fetch-api/#using-fetch
 
                                       fetch('https://yamaz.ru/api/Values/items')
                                       .then(response => response.json())
