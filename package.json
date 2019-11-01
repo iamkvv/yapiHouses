@@ -1,0 +1,28 @@
+{
+  "name": "yamaps",
+  "version": "1.0.0",
+  "description": "Describe c:/myworks/yamaps here",
+  "private": true,
+  "scripts": {
+    "build": "nwb build-react-app",
+    "clean": "nwb clean-app",
+    "start": "nwb serve-react-app",
+    "start-dev": "set HTTPS=true&&set PORT=443&&nwb serve-react-app",
+    "test": "nwb test-react",
+    "test:coverage": "nwb test-react --coverage",
+    "test:watch": "nwb test-react --server"
+  },
+  "dependencies": {
+    "antd": "^3.24.2",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-yandex-maps": "^4.0.1"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.12.2",
+    "nwb": "0.23.x"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": ""
+}
