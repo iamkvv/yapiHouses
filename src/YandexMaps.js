@@ -11,9 +11,9 @@ import Baloon from './Baloon'
 
 async function Test(){
     //https://stackoverflow.com/questions/52896068/reactasp-net-core-no-access-control-allow-origin-header-is-present-on-the-r
-    console.log("TEST  https://localhost:44312/  ");
-     await fetch("https://yamaz.ru/api/Values/items",{method: 'GET', mode:'cors' })
-     .then(response =>{ console.log( response.json())})
+   // console.log("TEST  https://localhost:44312/  ");
+      return await fetch("https://yamaz.ru/api/Values/items",{method: 'GET', mode:'cors' })
+     .then(response => response)
      .catch(error => console.log("ERR",error) );
  }
 
@@ -141,8 +141,17 @@ class YandexMaps extends Component {
                                         console.log(newContent.properties.getAll())
 
                                        
-                                        Test() 
+                                      //console.log("FETCH",  Test()[0] )
                                         
+                                    //    fetch("https://yamaz.ru/api/Values/items",{method: 'GET', mode:'cors' })
+                                    //   .then(response => console.log response)
+
+                                      fetch('https://yamaz.ru/api/Values/items')
+                                      .then(response => response.json())
+                                      .then(data => console.log(data))
+
+
+
                                         // res.geoObjects.get(0).properties.get('name') :
                                                // 'Не удалось определить адрес.';
                         
