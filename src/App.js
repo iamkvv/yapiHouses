@@ -17,7 +17,7 @@ class App extends Component {
     super(props);
     this.state = {
       HousesByComp: [],
-      zoom:8
+      zoom: 8
     }
   }
 
@@ -33,19 +33,19 @@ class App extends Component {
     console.log("val", value, e);
 
     this.setState({
-      zoom: this.state.zoom-1
+      zoom: this.state.zoom - 1
     });
 
     this.setState({
       HousesByComp: this.filterHouses(value),
-     // zoom:10
+      // zoom:10
     });
 
     this.setState({
-      zoom:  this.state.zoom == 10 ? this.state.zoom-1 : 10
+      zoom: this.state.zoom == 10 ? this.state.zoom - 1 : 10
     });
 
-    
+
 
 
   }
@@ -68,15 +68,15 @@ class App extends Component {
           </div>
 
 
-          <div className="App-flex" style ={{width:600,margin:"0 auto"}}>
-         {/*     <Companies comps = {CompaniesData} onCompanyChange={this.onCompanyChange} ></Companies>
+          <div className="App-flex" style={{ width: 600, margin: "0 auto" }}>
+            {/*     <Companies comps = {CompaniesData} onCompanyChange={this.onCompanyChange} ></Companies>
            <Houses houses = {this.state.HousesByComp}></Houses>  */}
 
-            
+
             <div>
-              <YandexMaps zoom={this.state.zoom}  houses = {this.state.HousesByComp} />
+              <YandexMaps zoom={8} />
             </div>
-            
+
 
           </div>
 

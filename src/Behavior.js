@@ -1,6 +1,7 @@
 function Behavior() {
     this.options = new window.YAPI.option.Manager(); // Менеджер опций
     this.events = new window.YAPI.event.Manager(); // Менеджер событий
+    this.root = null
 }
 
 Behavior.prototype = {
@@ -25,22 +26,46 @@ Behavior.prototype = {
     _onClick: function (e) {
         var coords = e.get('coords');
         this._parent.getMap().setCenter(coords);
-        console.log("Click",e.get("coords"));
+        console.log("Click", this.root, e.get("coords"));
+
+        var pan = window.YAPI.panorama.createPlayer("pan", coords)
+        console.log("PAN", pan);
 
         var myGeoObject = new window.YAPI.Placemark(
             e.get('coords'),
             {
                 //layout:'<div style="padding:20px">123</div>',
                 balloonContent: '<h1>простое содержание балуна</h1>',
-                 balloonContentHeader:'Header',
+                balloonContentHeader: 'Header',
                 // baloonContentBody:'<h2>это baloonContentBody!!</h2>',
-                 balloonContentFooter:'Footer'
+                balloonContentFooter: 'Footer'
             },
             {
                 preset: 'islands#icon',
-                iconColor: '#0095b6'
-            }
-        )
+                iconColor: '#0095b6',
+                iconColor: 'red',
+                draggable: true,
+                hasHint: true,
+
+            })
+
+        myGeoObject.events.add([
+            'mapchange', 'geometrychange', 'pixelgeometrychange', 'optionschange', 'propertieschange',
+            'balloonopen', 'balloonclose', 'hintopen', 'hintclose', 'dragstart', 'dragend'
+        ], function (e) {
+
+
+            console.log("E", e.originalEvent.target.geometry._coordinates);
+
+            var crd = e.originalEvent.target.geometry._coordinates
+
+            var pan = window.YAPI.panorama.createPlayer("pan", crd)
+
+            console.log("PAN", pan);
+
+        });
+
+
 
         this._parent.getMap().geoObjects.removeAll();
         this._parent.getMap().geoObjects.add(myGeoObject);
