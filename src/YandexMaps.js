@@ -22,11 +22,63 @@ class YandexMaps extends Component {
         this.state = {
             ymaps: null,
             coord: [55.157, 61.442],
-            centermap: [55.157, 61.442]
+            centermap: [55.157, 61.442],
+    
         }
     }
     mapInstance = null;
     API = null;
+    showpanorama=false;
+
+
+
+    checkPan = () => {
+        console.log("CHECK PAN")
+        if (window.YAPI) {
+            // var p = document.getElementById("pan");
+            // p.innerHTML="";
+         
+
+            window.YAPI.panorama.locate(this.state.pmcoord).then((res)=>{
+                console.log("RES",res)
+                //window.YAPI.panorama.Manager.closePlayer();
+                
+                // if (res.length) {
+                //     this.setState({ showpanorama: true })
+                // } else {
+                //     this.setState({ showpanorama: false })
+                // }
+
+                 //this.setState({ showpanorama: res.length ? true : false })
+                //   debugger
+                    
+                //  var qq=  window.YAPI.panorama.createPlayer("pan",this.state.pmcoord)
+                //   .then((resolve) => {
+                //         //let pn = resolve.getPanorama()
+                //         console.log("resolve", resolve);
+                //         debugger;
+
+                //     })
+
+                   // console.log("QQ",qq)
+
+                //}
+
+                
+            })
+
+
+
+            // window.YAPI.panorama.createPlayer("pan", this.state.pmcoord).then((resolve) => {
+            //     let pn = resolve.getPanorama()
+            //     console.log("PN", pn);
+            //     debugger;
+
+            // })
+
+           // return true;
+        }
+    }
 
 
 
@@ -34,11 +86,32 @@ class YandexMaps extends Component {
         window.YAPI = apiobj;
         let map = this.mapInstance;
 
-        var bb = apiobj.behavior.storage.add('mybehavior', Behavior);
-        bb.root = this;
-        console.log("BB", bb);
+//var beh0 = new Behavior()
+//console.log(beh0);
 
-        map.behaviors.enable('mybehavior');
+     //   var bb = apiobj.behavior.storage.add('mybehavior', Behavior);
+       // bb.root = this;
+    //    console.log("BB", bb.hash.mybehavior);
+
+    
+
+   // var ex=     map.behaviors.enable(['mybehavior']);
+
+//    ex._behaviors.mybehavior.root2='123456';
+//    ex._behaviors.mybehavior.root();
+
+//    console.log("EX ",ex )
+
+ //var mybeh= apiobj.behavior.storage.get('mybehavior')
+//mybeh.root();
+//var mybeh1 = new mybeh()
+
+ //console.log("MYBEH1", mybeh );
+
+// var z= mybeh();
+ //z.root();
+//mybeh.root("QWERTY");
+//console.log("MYBEH1", mybeh );
 
         map.behaviors.enable('scrollZoom')
         ///
@@ -97,7 +170,24 @@ class YandexMaps extends Component {
                                     let coord = e.get('coords');
 
                                     //centermap - is OK!!
-                                    this.setState({ pmcoord: coord, centermap: coord })// , center:coord})
+
+                                    this.setState({ pmcoord: coord, centermap: coord }, () => {
+
+                                        window.YAPI.panorama.locate(this.state.pmcoord).then((res) => {
+                                            debugger;
+                                            if (res.length) {
+                                                this.showpanorama=true;
+                                            } else {
+                                                this.showpanorama=false;
+                                            }
+                                        })
+
+                                    })
+
+                                    // , center:coord})
+
+                                    //this.checkPan()
+
 
                                     //setTimeout(()=>{e.originalEvent.map.setCenter(coord)},15)
 
@@ -196,18 +286,56 @@ class YandexMaps extends Component {
 
                             </Map>
                         </div>
-                        <div style={{ width: 200 }}>
+                        <div style={{ width: 300 }}>
                             <h1>TEST <span>{this.state.pmcoord}</span>
                                 <span>{}</span>
                             </h1>
-                            {this.state.pmcoord ?
-                                <Panorama
-                                    onDestroy={e => { console.log("destroy", e) }}
-                                    onLoad={(l => { console.log("Panorama", l) })} point={this.state.pmcoord} >
-                                    <h1>?????</h1>
+                            <div id="pan" style={{ width:300,height: 225}}>
+                            
 
-                                </Panorama> :
-                                null}
+                                {this.showpanorama ?
+                                    <Panorama
+                                        onDestroy={e => { console.log("destroy", e) }}
+                                        onLoad={(l => { console.log("Panorama", l) })}
+                                        point={this.state.pmcoord}
+                                        options={
+                                            {
+                                                controls: ['zoomControl', 'fullscreenControl']
+                                            }
+                                        }
+                                    />
+                                    :
+                                    <h2>Панорамы нет</h2>
+                                }
+
+                            </div>
+                          
+                            
+{/* 
+                            {this.checkPan() ?
+
+                                this.state.pmcoord ?
+                                    <Panorama
+                                        onDestroy={e => { console.log("destroy", e) }}
+                                        onLoad={(l => { console.log("Panorama", l) })}
+                                        point={this.state.pmcoord}
+                                        options={
+                                            {
+                                                controls: ['zoomControl', 'fullscreenControl']
+                                            }
+                                        }
+                                    >
+                                    :
+                                        <h1>?????</h1>
+
+                                    </Panorama> :
+                                    <h2>???!!!</h2>
+
+                                :
+                                <h1>NOT!</h1>
+                            }                   
+*/}
+
 
                         </div>
                     </div>

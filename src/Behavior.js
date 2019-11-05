@@ -1,7 +1,9 @@
 function Behavior() {
     this.options = new window.YAPI.option.Manager(); // Менеджер опций
     this.events = new window.YAPI.event.Manager(); // Менеджер событий
-    this.root = null
+    
+    this.root2 = null
+    this.root = function(k){alert(this.root2)}
 }
 
 Behavior.prototype = {
@@ -24,12 +26,15 @@ Behavior.prototype = {
     getParent: function () { return this._parent; },
     // центрирование по месту клика.
     _onClick: function (e) {
+
+        alert(this.root);
+
         var coords = e.get('coords');
         this._parent.getMap().setCenter(coords);
-        console.log("Click", this.root, e.get("coords"));
+        console.log("Click", this, e.get("coords"));
 
-        var pan = window.YAPI.panorama.createPlayer("pan", coords)
-        console.log("PAN", pan);
+        // var pan = window.YAPI.panorama.createPlayer("pan", coords)
+        // console.log("PAN", pan);
 
         var myGeoObject = new window.YAPI.Placemark(
             e.get('coords'),
@@ -59,7 +64,7 @@ Behavior.prototype = {
 
             var crd = e.originalEvent.target.geometry._coordinates
 
-            var pan = window.YAPI.panorama.createPlayer("pan", crd)
+            //var pan = window.YAPI.panorama.createPlayer("pan", crd)
 
             console.log("PAN", pan);
 
