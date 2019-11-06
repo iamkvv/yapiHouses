@@ -9,8 +9,8 @@ class YandexMaps extends Component {
         super(props);
         this.state = {
             ymaps: null,
-           // coord: [55.157, 61.442],
-            centermap: [55.15886441349485, 61.4025500698089],  
+            // coord: [55.157, 61.442],
+            centermap: [55.15886441349485, 61.4025500698089],
         }
     }
 
@@ -56,7 +56,7 @@ class YandexMaps extends Component {
                 balloonContentFooter: 'Footer'
             },
             {
-                preset: 'islands#icon',
+                preset: "islands#blueDotIcon",// 'islands#icon',
                 iconColor: 'red',//'#0095b6',
                 draggable: true
             },
@@ -85,26 +85,26 @@ class YandexMaps extends Component {
         })
     }
 
-        //получаем Yandex-адрес
-        getYAddress = (coord) => {
-            let mess1 = '<p>Перетащите метку, чтобы выбрать дом </p>';
-            let mess2 = '<h3>Выбранный адрес:</h3>';
-            let mess3 = '<p>Дом не выбран</p>';
+    //получаем Yandex-адрес
+    getYAddress = (coord) => {
+        let mess1 = '<p>Перетащите метку, чтобы выбрать дом </p>';
+        let mess2 = '<h3>Выбранный адрес:</h3>';
+        let mess3 = '<p>Дом не выбран</p>';
 
-            return window.YAPI.geocode(coord, {
-                results: 1
-            }).then((r) => {
-                let shortaddr = r.geoObjects.get(0).properties._data.name;
-                if (shortaddr.split(',').length > 1) {
-                    return '<div class="hint">'+ mess1 + mess2 + '<h3><strong>' + shortaddr + '</strong></h3>' +"</div>"
-                } else {
-                    return mess1 + mess3
-                }
-            })
-        }
+        return window.YAPI.geocode(coord, {
+            results: 1
+        }).then((r) => {
+            let shortaddr = r.geoObjects.get(0).properties._data.name;
+            if (shortaddr.split(',').length > 1) {
+                return mess1 + mess2 + '<h3><strong>' + shortaddr + '</strong></h3>'
+            } else {
+                return mess1 + mess3
+            }
+        })
+    }
 
     render() {
-        console.log("RENDER" )
+        console.log("RENDER")
 
         return (
             <div style={{ marginTop: 40 }} >
@@ -117,7 +117,7 @@ class YandexMaps extends Component {
                 }}>
 
                     <div style={{ width: "100%", display: "flex" }}>
-                        <div style={{ zIndex:9999, width: "100%" }}>
+                        <div style={{ zIndex: 9999, width: "100%" }}>
                             <Map className="MapDef"
                                 instanceRef={(map) => this.mapInstance = map}
 
@@ -136,40 +136,22 @@ class YandexMaps extends Component {
                                     this.setState({ pmcoord: coord });
                                     e.originalEvent.map.setCenter(coord)
 
-                                    this.PMark.geometry._coordinates=coord;
-                                     e.originalEvent.map.geoObjects.removeAll();
-                                     e.originalEvent.map.geoObjects.add(this.PMark);
+                                    this.PMark.geometry._coordinates = coord;
+                                    e.originalEvent.map.geoObjects.removeAll();
+                                    e.originalEvent.map.geoObjects.add(this.PMark);
 
-                                     this.getPanorama(coord);
+                                    this.getPanorama(coord);
 
-                                     //https://flaviocopes.com/fetch-api/#using-fetch
-                                     fetch('https://yamaz.ru/api/Values/items')
-                                     .then(response => response.json())
-                                     .then(data => console.log(data))
+                                    let addrPromise = this.getYAddress(coord);
+                                    addrPromise.then((r) => {
+                                        this.PMark.properties._data.hintContent = r;
+                                    })
+
+                                    //https://flaviocopes.com/fetch-api/#using-fetch
+                                    fetch('https://yamaz.ru/api/Values/items')
+                                        .then(response => response.json())
+                                        .then(data => console.log(data))
                                 }}>
-
-                                {/*
-                                            //    fetch("https://yamaz.ru/api/Values/items",{method: 'GET', mode:'cors' })
-                                            //   .then(response => console.log response)
-
-                                            //https://flaviocopes.com/fetch-api/#using-fetch
-                                            fetch('https://yamaz.ru/api/Values/items')
-                                                .then(response => response.json())
-                                                .then(data => console.log(data))
-
-
-
-                                            // res.geoObjects.get(0).properties.get('name') :
-                                            // 'Не удалось определить адрес.';
-
-                                            // Задаем новое содержимое балуна в соответствующее свойство метки.
-                                            ///placemark.properties.set('balloonContent', newContent);
-                                        })
-                                        //);
-
-                                    }}
-                                />
-                                */}
 
                             </Map>
                         </div>
