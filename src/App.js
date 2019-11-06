@@ -17,7 +17,7 @@ class App extends Component {
     super(props);
     this.state = {
       HousesByComp: [],
-      zoom: 8
+      zoom: 16
     }
   }
 
@@ -74,7 +74,7 @@ class App extends Component {
 
 
             <div>
-              <YandexMaps zoom={8} />
+              <YandexMaps zoom={16} />
             </div>
 
 
