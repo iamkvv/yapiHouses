@@ -63,11 +63,13 @@ class YandexMaps extends Component {
         )
 
         map.geoObjects.add(this.PMark);
+        this.getPanorama(this.state.centermap);
 
         //после перемещения метки ищем Yandex-адрес и панораму
         this.PMark.events.add("dragend", (e) => {
             let coord = e.originalEvent.target.geometry._coordinates;
             let addrPromise = this.getYAddress(coord);
+
             addrPromise.then((r) => {
                 this.PMark.properties._data.hintContent = r;
             }).done(() => {
@@ -94,7 +96,7 @@ class YandexMaps extends Component {
             }).then((r) => {
                 let shortaddr = r.geoObjects.get(0).properties._data.name;
                 if (shortaddr.split(',').length > 1) {
-                    return mess1 + mess2 + '<h3><strong>' + shortaddr + '</strong></h3>'
+                    return '<div class="hint">'+ mess1 + mess2 + '<h3><strong>' + shortaddr + '</strong></h3>' +"</div>"
                 } else {
                     return mess1 + mess3
                 }

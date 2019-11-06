@@ -8,6 +8,16 @@ body {
   padding: 0;
 }
 
-ymaps.ymaps-2-1-74-islets_round-button .ymaps-2-1-74-islets__icon_only {
-  display: none !important;
+.hint{
+  display: inline-block;
+            padding: 5px;
+            height: auto;
+            position: relative;
+            width: auto;
+            font-size: 11px;
+            line-height: 17px;
+            color: #333333;
+            background-color: #faefb6;
+            border: 1px solid #CDB7B5;
+            border-radius: 20px;
 }

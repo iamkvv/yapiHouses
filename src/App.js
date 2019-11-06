@@ -1,5 +1,4 @@
 import './App.css'
-//import { data1, data2, CompaniesData, HousesData } from './Data'
 
 import React, { Component } from 'react'
 
