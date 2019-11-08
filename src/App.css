@@ -34,8 +34,16 @@
 }
 
 .MapDef{
-  width:600px;
+  width:100%;/* width: 600px; */
   height:600px;
+  z-index: 9999;
+}
+
+.panorama{
+  background-color: #b4ffff;
+   padding: 5px; 
+   min-height: 600px;
+    min-width: 320px; 
 }
 
 /* .App-instructions {

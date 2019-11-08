@@ -2,7 +2,7 @@ import './App.css'
 
 import React, { Component } from 'react'
 
-import { DatePicker, ConfigProvider } from 'antd'
+import {Row,Col, DatePicker, ConfigProvider } from 'antd'
 import ru from 'antd/es/locale/ru_RU'
 
 import Companies from './Companies'
@@ -28,67 +28,42 @@ class App extends Component {
   //   })
   // }
 
+//     <Companies comps = {CompaniesData} onCompanyChange={this.onCompanyChange} ></Companies>
+       //    <Houses houses = {this.state.HousesByComp}></Houses>  
+
+
   onCompanyChange = (value, e) => {
     console.log("val", value, e);
-
     this.setState({
       zoom: this.state.zoom - 1
     });
-
     this.setState({
       HousesByComp: this.filterHouses(value),
       // zoom:10
     });
-
     this.setState({
       zoom: this.state.zoom == 10 ? this.state.zoom - 1 : 10
     });
-
-
-
-
   }
-
   filterHouses = (compId) => {
     let flt = HousesData.filter((item => {
       return item.comp_id == compId;
     }))
-
     return flt
   }
 
-
   render() {
     return (
-      <ConfigProvider locale={ru}>
-        <div className="App">
-          <div className="App-flex">
-            <h2>Заголовок страницы</h2>
-          </div>
+      <Row  gutter={16} style={{height:'100%',backgroundColor:'ivory'}}>
+        <Row style={{height:80,textAlign:'center'}} type='flex' align="middle" >
+        <Col  span={20} offset={2}>
+          <h2 style={{letterSpacing:3}}>Заголовок страницы</h2>
+          </Col>
+        </Row>
 
+          <YandexMaps zoom={16} />
 
-          <div className="App-flex" style={{ width: 600, margin: "0 auto" }}>
-            {/*     <Companies comps = {CompaniesData} onCompanyChange={this.onCompanyChange} ></Companies>
-           <Houses houses = {this.state.HousesByComp}></Houses>  */}
-
-
-            <div>
-              <YandexMaps zoom={16} />
-            </div>
-
-
-          </div>
-
-
-          <div className="App-flex">
-            <DatePicker format={dateFormat} />
-          </div>
-
-          <div className="App-flex">
-            <img className="App-logo" src={require('./react.svg')} />
-          </div>
-        </div>
-      </ConfigProvider>
+      </Row>
     )
   }
 }
